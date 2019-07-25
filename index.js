@@ -47,3 +47,5 @@ class BinarySearchTree {
 // 3 searches: 11 - 6 - 8
 
 // Given a sorted list 3, 5, 6, 8, 11, 12, 14, 15, 17, 18 and are using the recursive binary search algorithm.Identify the sequence of numbers that each recursive call will search to find 16 ?
+
+// 3 searches: 11 - 15 - 17 
