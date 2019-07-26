@@ -28,40 +28,40 @@ class App extends React.Component {
 
   handleBinarySubmit = (ev) => {
     ev.preventDefault()
-    const input = parseInt(ev.target.binary.value)
+    const input = Number(ev.target.binary.value)
     const sorted = dataset.sort((a, b) => a - b)
 
     
     const numbers = sorted.map(str => parseInt(str))
-
-    console.log(this.binarySearch(numbers, input))
+  // console.log(input)
+    this.setState({binarySearchSteps: this.binarySearch(numbers, input)})
 
   }
 
-  binarySearch = (array, value, start, end) => {
+  binarySearch = (array, value, start, end, count) => {
+    count = count === undefined ? 0 : count;
     start = start === undefined ? 0 : start;
     end = end === undefined ? array.length : end;
-    if (start > end) {
-        return -1;
+    console.log(start, end)
+    if (start >= end) {
+        // return -1;  
+        return `Not found and took ${count} steps`;
     }
-
 
     const index = Math.floor((start + end) / 2)
     const item = array[index]
-    console.log('item', item)
-    console.log(start, end);
+    console.log(count)
     if(item === value) {
-      console.log('equal')
-      return index
+      // return index;
+      return count
     }
-
     else if(item > value) {
-      console.log('go down')
-      return this.binarySearch(array, value, start, index - 1 )
+      count++
+      return this.binarySearch(array, value, start, index - 1, count)
     }
     else if(item < value) {
-      console.log('go up')
-      return this.binarySearch(array, value, index + 1, end)
+      count++
+      return this.binarySearch(array, value, index + 1, end, count)
     }
 
   }
@@ -77,10 +77,10 @@ render() {
         {this.state.linearSearchSteps && <p>{this.state.linearSearchSteps}</p>}
         <form onSubmit={(ev) => this.handleBinarySubmit(ev)}>
         <label>Enter dataset for binary search: </label>
-        <input type="text" />
-        <button id="binary" type="submit">Submit</button>
+        <input id="binary" type="text" />
+        <button type="submit">Submit</button>
         </form>
-        {this.state.binarySearchSteps && <p>Value</p>}
+        {this.state.binarySearchSteps && <p>{this.state.binarySearchSteps}</p>}
       </div>
     );
 }
